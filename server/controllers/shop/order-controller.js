@@ -190,6 +190,21 @@ const createOrder = async (req, res) => {
       console.error("Error sending order copy to shop:", err);
     }
 
+    // Try sending copy to salesman
+    if (salesmanDetails && salesmanDetails.email && /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/.test(salesmanDetails.email)) {
+      try {
+        await transporter.sendMail({
+          from: "gozoomtechnologies@gmail.com",
+          to: salesmanDetails.email,
+          subject: `Copy of Order Received - ${addressInfo.shopName}`,
+          html: emailHTML,
+        });
+        console.log(`Order copy sent to salesman email: ${salesmanDetails.email}`);
+      } catch (err) {
+        console.error("Error sending order copy to salesman:", err);
+      }
+    }
+
     res.status(201).json({
       success: true,
       message: "Order created successfully (COD). Email sent.",
