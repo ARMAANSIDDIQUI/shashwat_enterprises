@@ -244,10 +244,6 @@ function UnauthHome() {
                       <CheckCircle className="w-5 h-5 text-green-400" />
                       <span>App-like Experience</span>
                     </div>
-                    <div className="flex items-center gap-2 text-white">
-                      <CheckCircle className="w-5 h-5 text-green-400" />
-                      <span>Offline Support</span>
-                    </div>
                   </div>
 
                   <Button

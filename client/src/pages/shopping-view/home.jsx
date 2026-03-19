@@ -304,7 +304,7 @@ function ShoppingHome() {
                     Experience Shashwat Enterprises on Mobile
                   </h2>
                   <p className="text-blue-100 text-lg mb-8 max-w-xl">
-                    Get the best experience with our official Web App. Fast, reliable, and works offline!
+                    Get the best experience with our official Web App. Fast and reliable!
                   </p>
                   
                   <div className="flex flex-col sm:flex-row items-center gap-6 mb-8">
@@ -315,10 +315,6 @@ function ShoppingHome() {
                     <div className="flex items-center gap-2 text-white">
                       <CheckCircle className="w-5 h-5 text-green-400" />
                       <span>App-like Experience</span>
-                    </div>
-                    <div className="flex items-center gap-2 text-white">
-                      <CheckCircle className="w-5 h-5 text-green-400" />
-                      <span>Offline Support</span>
                     </div>
                   </div>
 
