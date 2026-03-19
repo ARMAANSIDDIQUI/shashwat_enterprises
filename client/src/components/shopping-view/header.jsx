@@ -1,4 +1,4 @@
-import { Slack, LogOut, Menu, ShoppingCart, UserCog } from "lucide-react";
+import { Slack, LogOut, Menu, ShoppingCart, UserCog, Smartphone } from "lucide-react";
 import { FcStumbleupon } from "react-icons/fc";
 import {
   Link,
@@ -24,6 +24,7 @@ import UserCartWrapper from "./cart-wrapper";
 import { useEffect, useState } from "react";
 import { fetchCartItems } from "@/store/shop/cart-slice";
 import { Label } from "../ui/label";
+import { usePWAInstall } from "@/hooks/usePWAInstall";
 
 function MenuItems({ closeSheet }) {
   const navigate = useNavigate();
@@ -95,8 +96,22 @@ function HeaderRightContent() {
     dispatch(fetchCartItems(user?.id));
   }, [dispatch]);
 
+  const { showInstallButton, handleInstallClick } = usePWAInstall();
+
   return (
     <div className="flex lg:items-center lg:flex-row gap-4">
+      {showInstallButton && (
+        <Button
+          onClick={handleInstallClick}
+          variant="outline"
+          size="sm"
+          className="flex items-center gap-2 bg-blue-50 hover:bg-blue-100 text-blue-600 border-blue-200 transition-all duration-300"
+        >
+          <Smartphone className="w-4 h-4" />
+          <span className="hidden sm:inline">Download App</span>
+          <span className="sm:hidden text-xs font-bold">App</span>
+        </Button>
+      )}
       <Sheet open={openCartSheet} onOpenChange={() => setOpenCartSheet(false)}>
         <Button
           onClick={() => setOpenCartSheet(true)}
