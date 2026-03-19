@@ -1,4 +1,4 @@
-import { Menu } from "lucide-react";
+import { Menu, Smartphone } from "lucide-react";
 import { FcStumbleupon } from "react-icons/fc";
 import {
   Link,
@@ -8,6 +8,7 @@ import { Sheet, SheetContent, SheetTrigger } from "../ui/sheet";
 import { Button } from "../ui/button";
 import { Label } from "../ui/label";
 import { useState } from "react";
+import { usePWAInstall } from "@/hooks/usePWAInstall";
 
 function MenuItems({ closeSheet }) {
   const navigate = useNavigate();
@@ -42,6 +43,7 @@ function MenuItems({ closeSheet }) {
 function UnauthHeader() {
   const navigate = useNavigate();
   const [isSheetOpen, setIsSheetOpen] = useState(false);
+  const { showInstallButton, handleInstallClick } = usePWAInstall();
 
   return (
     <header className="fixed top-0 z-40 w-full border-b bg-background">
@@ -51,7 +53,21 @@ function UnauthHeader() {
           <span className="font-bold">Shashwat Enterprises</span>
         </Link>
         
-        <Sheet open={isSheetOpen} onOpenChange={setIsSheetOpen}>
+        <div className="flex items-center gap-4">
+          {showInstallButton && (
+            <Button
+              onClick={handleInstallClick}
+              variant="outline"
+              size="sm"
+              className="flex items-center gap-2 bg-blue-50 hover:bg-blue-100 text-blue-600 border-blue-200 transition-all duration-300"
+            >
+              <Smartphone className="w-4 h-4" />
+              <span className="hidden sm:inline">Download App</span>
+              <span className="sm:hidden text-xs font-bold">App</span>
+            </Button>
+          )}
+
+          <Sheet open={isSheetOpen} onOpenChange={setIsSheetOpen}>
           <div className="lg:hidden">
             <Button onClick={() => navigate("/auth/login")}>Login</Button>
           </div>
@@ -72,6 +88,7 @@ function UnauthHeader() {
             <Button onClick={() => navigate("/auth/login")}>Login</Button>
           </SheetContent>
         </Sheet>
+      </div>
 
         <div className="hidden lg:block">
           <MenuItems />

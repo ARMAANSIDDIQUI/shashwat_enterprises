@@ -16,6 +16,8 @@ import { useToast } from "@/components/ui/use-toast";
 import ProductDetailsDialog from "@/components/shopping-view/product-details";
 import { getFeatureImages } from "@/store/common-slice";
 import EnquiryDialog from "@/components/shopping-view/EnquiryDialog";
+import { usePWAInstall } from "@/hooks/usePWAInstall";
+import { Smartphone, Download, CheckCircle } from "lucide-react";
 
 function UnauthHome() {
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -34,6 +36,7 @@ function UnauthHome() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { toast } = useToast();
+  const { showInstallButton, handleInstallClick } = usePWAInstall();
 
   function handleNavigateToListingPage(getCurrentItem, section) {
     sessionStorage.removeItem("filters");
@@ -218,7 +221,56 @@ function UnauthHome() {
       </div>
     </section>
 
-      
+      {showInstallButton && (
+        <section className="py-12 bg-white">
+          <div className="container mx-auto px-4">
+            <div className="bg-gradient-to-r from-blue-600 to-indigo-700 rounded-3xl p-8 md:p-12 shadow-2xl overflow-hidden relative">
+              <div className="absolute top-0 right-0 -mt-10 -mr-10 w-64 h-64 bg-white opacity-10 rounded-full blur-3xl"></div>
+              <div className="absolute bottom-0 left-0 -mb-10 -ml-10 w-48 h-48 bg-blue-400 opacity-20 rounded-full blur-2xl"></div>
+              
+              <div className="flex flex-col md:flex-row items-center justify-between gap-8 relative z-10">
+                <div className="flex-1 text-center md:text-left">
+                  <h2 className="text-3xl md:text-4xl font-extrabold text-white mb-4">
+                    Experience Shashwat Enterprises on Mobile
+                  </h2>
+                  <p className="text-blue-100 text-lg mb-8 max-w-xl">
+                    Get the best experience with our official Web App. Fast, reliable, and works offline!
+                  </p>
+                  
+                  <div className="flex flex-col sm:flex-row items-center gap-6 mb-8">
+                    <div className="flex items-center gap-2 text-white">
+                      <CheckCircle className="w-5 h-5 text-green-400" />
+                      <span>Fast Access</span>
+                    </div>
+                    <div className="flex items-center gap-2 text-white">
+                      <CheckCircle className="w-5 h-5 text-green-400" />
+                      <span>App-like Experience</span>
+                    </div>
+                    <div className="flex items-center gap-2 text-white">
+                      <CheckCircle className="w-5 h-5 text-green-400" />
+                      <span>Offline Support</span>
+                    </div>
+                  </div>
+
+                  <Button
+                    onClick={handleInstallClick}
+                    className="bg-white text-blue-700 hover:bg-blue-50 font-bold py-6 px-10 rounded-xl text-lg shadow-lg hover:scale-105 transition-all duration-300 flex items-center gap-3"
+                  >
+                    <Download className="w-6 h-6" />
+                    Download App Now
+                  </Button>
+                </div>
+
+                <div className="flex-shrink-0 bg-white/10 p-4 rounded-3xl backdrop-blur-sm border border-white/20">
+                  <div className="bg-white rounded-2xl p-6 shadow-inner">
+                    <Smartphone className="w-32 h-32 md:w-48 md:h-48 text-blue-600" />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      )}
 
       <section className="py-12">
         <div className="container mx-auto px-4">
