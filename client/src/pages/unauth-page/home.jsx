@@ -1,7 +1,7 @@
 import React, { memo } from 'react';
 import { Button } from "@/components/ui/button";
 import { GiChocolateBar } from "react-icons/gi";
-import { getAllBrands} from '@/store/admin/brands-slice';
+import { getAllBrands } from '@/store/admin/brands-slice';
 import { getAllCategories } from '@/store/admin/category-slice';
 import { Card, CardContent } from "@/components/ui/card";
 import { useEffect, useState } from "react";
@@ -25,8 +25,8 @@ function UnauthHome() {
     (state) => state.shopProducts
   );
   const { featureImageList } = useSelector((state) => state.commonFeature);
-  const { categoriesList} = useSelector((state) => state.category);
-  const { brandsList }  = useSelector((state) => state.brands);
+  const { categoriesList } = useSelector((state) => state.category);
+  const { brandsList } = useSelector((state) => state.brands);
 
   const [openDetailsDialog, setOpenDetailsDialog] = useState(false);
   const [openEnquiryDialog, setOpenEnquiryDialog] = useState(false);
@@ -109,7 +109,7 @@ function UnauthHome() {
     dispatch(getAllCategories());
     dispatch(getFeatureImages());
   }, [dispatch]);
-  
+
   useEffect(() => {
     console.log("bestProducts:", bestProducts);
     console.log("featureImageList:", featureImageList);
@@ -119,107 +119,105 @@ function UnauthHome() {
 
   return (
     <div className="flex flex-col min-h-screen p-3 mt-16">
-     <div className="relative w-full h-[190px] sm:h-[400px] md:h-[500px] lg:h-[600px] overflow-hidden ">
-  {featureImageList && featureImageList.length > 0
-    ? featureImageList.map((slide, index) => (
-        <img
-          src={slide?.image}
-          key={index}
-          className={`${
-            index === currentSlide ? "opacity-100" : "opacity-0"
-          } absolute top-0 left-0 w-full h-full object-cover transition-opacity duration-1000 rounded-lg`}
-        />
-      ))
-    : null}
+      <div className="relative w-full h-[190px] sm:h-[400px] md:h-[500px] lg:h-[600px] overflow-hidden ">
+        {featureImageList && featureImageList.length > 0
+          ? featureImageList.map((slide, index) => (
+            <img
+              src={slide?.image}
+              key={index}
+              className={`${index === currentSlide ? "opacity-100" : "opacity-0"
+                } absolute top-0 left-0 w-full h-full object-cover transition-opacity duration-1000 rounded-lg`}
+            />
+          ))
+          : null}
 
-  {/* Dots at the bottom */}
-  <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2">
-    {featureImageList.map((_, index) => (
-      <button
-        key={index}
-        onClick={() => setCurrentSlide(index)}
-        className={`w-2 h-   rounded-full ${
-          index === currentSlide ? "bg-blue-500" : "bg-gray-300"
-        }`}
-      />
-    ))}
-  </div>
-</div>
+        {/* Dots at the bottom */}
+        <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2">
+          {featureImageList.map((_, index) => (
+            <button
+              key={index}
+              onClick={() => setCurrentSlide(index)}
+              className={`w-2 h-   rounded-full ${index === currentSlide ? "bg-blue-500" : "bg-gray-300"
+                }`}
+            />
+          ))}
+        </div>
+      </div>
 
-{/* Add View All Products Button */}
-<div className="flex justify-center mt-8">
-  <button
-    onClick={() => navigate("/listing")}
-    className="px-4 py-2 bg-gradient-to-r from-orange-600 to-red-500 text-white font-semibold text-sm rounded-full shadow-lg 
+      {/* Add View All Products Button */}
+      <div className="flex justify-center mt-8">
+        <button
+          onClick={() => navigate("/listing")}
+          className="px-4 py-2 bg-gradient-to-r from-orange-600 to-red-500 text-white font-semibold text-sm rounded-full shadow-lg 
       hover:scale-105 transition-transform duration-300 ease-in-out 
       focus:ring-4 focus:ring-purple-300 focus:outline-none"
-  >
-    View All Products
-  </button>
-</div>
-
-<section className="py-12 bg-gray-50">
-      <div className="container mx-auto px-4">
-        <h2 className="text-3xl font-bold text-center mb-8">Shop by Brand</h2>
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
-          {brandsList?.length > 0 ? (
-            brandsList.map((brandItem) => (
-              <Card
-                key={brandItem.id}
-                onClick={() => handleNavigateToListingPage(brandItem.brandName, "brand")}
-                className="cursor-pointer hover:shadow-lg transition-shadow"
-              >
-                <CardContent className="flex flex-col items-center justify-center p-6">
-                  <img
-                    src={brandItem.imageUrl}
-                    alt={brandItem.brandName}
-                    className="w-18 h-16"
-                  />
-                  <span className="font-bold">{brandItem.brandName}</span>
-                </CardContent>
-              </Card>
-            ))
-          ) : (
-            <p className="text-center col-span-full">No brands available</p>
-          )}
-        </div>
+        >
+          View All Products
+        </button>
       </div>
-    </section>
 
-
-    <section className="py-12 bg-gray-50">
-      <div className="container mx-auto px-4">
-        <h2 className="text-3xl font-bold text-center mb-8">
-          Shop by Category
-        </h2>
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
-          {categoriesList?.length > 0 ? (
-            categoriesList.map((categoryItem) => (
-              <Card
-                key={categoryItem.id}
-                onClick={() => handleNavigateToListingPage(categoryItem.categoryName, "category")}
-                className="cursor-pointer hover:shadow-lg transition-shadow"
-              >
-                <CardContent className="flex flex-col items-center justify-center p-6">
-                  {categoryItem.imageUrl ? (
+      <section className="py-12 bg-gray-50">
+        <div className="container mx-auto px-4">
+          <h2 className="text-3xl font-bold text-center mb-8">Shop by Brand</h2>
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+            {brandsList?.length > 0 ? (
+              brandsList.map((brandItem) => (
+                <Card
+                  key={brandItem.id}
+                  onClick={() => handleNavigateToListingPage(brandItem.brandName, "brand")}
+                  className="cursor-pointer hover:shadow-lg transition-shadow"
+                >
+                  <CardContent className="flex flex-col items-center justify-center p-6">
                     <img
-                      src={categoryItem.imageUrl}
-                      alt={categoryItem.categoryName}
-                      className="w-12 h-12 mb-4"
+                      src={brandItem.imageUrl}
+                      alt={brandItem.brandName}
+                      className="w-18 h-16"
                     />
-                  ) : (
-                    <categoryItem.icon className="w-12 h-12 mb-4 text-primary" />
-                  )}
-                  <span className="font-bold">{categoryItem.categoryName}</span>
-                </CardContent>
-              </Card>
-            ))
-          ) : (
-            <p className="text-center col-span-full">No categories available</p>
-          )}
+                    <span className="font-bold">{brandItem.brandName}</span>
+                  </CardContent>
+                </Card>
+              ))
+            ) : (
+              <p className="text-center col-span-full">No brands available</p>
+            )}
+          </div>
         </div>
-      </div>
-    </section>
+      </section>
+
+
+      <section className="py-12 bg-gray-50">
+        <div className="container mx-auto px-4">
+          <h2 className="text-3xl font-bold text-center mb-8">
+            Shop by Category
+          </h2>
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+            {categoriesList?.length > 0 ? (
+              categoriesList.map((categoryItem) => (
+                <Card
+                  key={categoryItem.id}
+                  onClick={() => handleNavigateToListingPage(categoryItem.categoryName, "category")}
+                  className="cursor-pointer hover:shadow-lg transition-shadow"
+                >
+                  <CardContent className="flex flex-col items-center justify-center p-6">
+                    {categoryItem.imageUrl ? (
+                      <img
+                        src={categoryItem.imageUrl}
+                        alt={categoryItem.categoryName}
+                        className="w-12 h-12 mb-4"
+                      />
+                    ) : (
+                      <categoryItem.icon className="w-12 h-12 mb-4 text-primary" />
+                    )}
+                    <span className="font-bold">{categoryItem.categoryName}</span>
+                  </CardContent>
+                </Card>
+              ))
+            ) : (
+              <p className="text-center col-span-full">No categories available</p>
+            )}
+          </div>
+        </div>
+      </section>
 
       {showInstallButton && (
         <section className="py-12 bg-white">
@@ -227,16 +225,16 @@ function UnauthHome() {
             <div className="bg-gradient-to-r from-blue-600 to-indigo-700 rounded-3xl p-8 md:p-12 shadow-2xl overflow-hidden relative">
               <div className="absolute top-0 right-0 -mt-10 -mr-10 w-64 h-64 bg-white opacity-10 rounded-full blur-3xl"></div>
               <div className="absolute bottom-0 left-0 -mb-10 -ml-10 w-48 h-48 bg-blue-400 opacity-20 rounded-full blur-2xl"></div>
-              
+
               <div className="flex flex-col md:flex-row items-center justify-between gap-8 relative z-10">
                 <div className="flex-1 text-center md:text-left">
                   <h2 className="text-3xl md:text-4xl font-extrabold text-white mb-4">
                     Experience Shashwat Enterprises on Mobile
                   </h2>
                   <p className="text-blue-100 text-lg mb-8 max-w-xl">
-                    Get the best experience with our official Web App. Fast, reliable, and works offline!
+                    Get the best experience with our official Web App. Fast and reliable!
                   </p>
-                  
+
                   <div className="flex flex-col sm:flex-row items-center gap-6 mb-8">
                     <div className="flex items-center gap-2 text-white">
                       <CheckCircle className="w-5 h-5 text-green-400" />
@@ -280,13 +278,13 @@ function UnauthHome() {
           <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-6">
             {bestProducts && bestProducts.length > 0
               ? bestProducts.map((productItem) => (
-                  <ShoppingProductTile
+                <ShoppingProductTile
                   product={productItem}
                   handleGetProductDetails={handleGetProductDetails}
                   handleEnquire={handleEnquire}
                   isAuthPage={false}
-                  />
-                ))
+                />
+              ))
               : null}
           </div>
         </div>
